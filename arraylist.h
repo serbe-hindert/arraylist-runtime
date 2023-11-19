@@ -18,5 +18,6 @@ _Bool ArrayList_add(struct ArrayList* list, void *value);
 void *ArrayList_get(struct ArrayList* list, const unsigned int index);
 _Bool ArrayList_delete(struct ArrayList* list, const unsigned int index);
 _Bool ArrayList_fastDelete(struct ArrayList* list, const unsigned int index);
+_Bool ArrayList_contains(struct ArrayList* list, void *value);
 
 #endif //ARRAYLIST_LIBRARY_H

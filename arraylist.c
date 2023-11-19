@@ -66,3 +66,12 @@ _Bool ArrayList_fastDelete(struct ArrayList* list, const unsigned int index) {
 
     return 1;
 }
+
+_Bool ArrayList_contains(struct ArrayList* list, void *value) {
+    for (int i = 0; i < list->count; i++) {
+        if (memcmp((char *)list->get + i * list->datatypeSize, value, list->datatypeSize) == 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
