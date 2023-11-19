@@ -1,10 +1,15 @@
 #include "arraylist.h"
 
-_Bool ArrayList_init(struct ArrayList* list, unsigned int initialSize, size_t datatypeSize) {
+_Bool ArrayList_init(struct ArrayList* list, const unsigned int initialSize, const size_t datatypeSize) {
     list->count = 0;
     list->size = initialSize;
     list->datatypeSize = datatypeSize;
     list->get = malloc(datatypeSize);
+    return list->get != NULL;
+}
+
+_Bool ArrayList_from(struct ArrayList* list, struct ArrayList* from) {
+    memcpy(list, from, sizeof(struct ArrayList));
     return list->get != NULL;
 }
 
@@ -30,9 +35,34 @@ _Bool ArrayList_add(struct ArrayList* list, void *value) {
     return 1;
 }
 
-void *ArrayList_get(struct ArrayList* list, unsigned int index) {
+void *ArrayList_get(struct ArrayList* list, const unsigned int index) {
     if (index >= list->count) {
         return NULL;
     }
     return (char *)list->get + index * list->datatypeSize;
+}
+
+_Bool ArrayList_delete(struct ArrayList* list, const unsigned int index) {
+    if (index >= list->count) {
+        return 0;
+    }
+
+    for (int i = index; i < list->count - 1; i++) {
+        memcpy((char *)list->get + i * list->datatypeSize, (char *)list->get + (i + 1) * list->datatypeSize, list->datatypeSize);
+    }
+
+    list->count--;
+
+    return 1;
+}
+
+_Bool ArrayList_fastDelete(struct ArrayList* list, const unsigned int index) {
+    if (index >= list->count) {
+        return 0;
+    }
+
+    memcpy((char *)list->get + index * list->datatypeSize, (char*)list->get + (list->count - 1) * list->datatypeSize, list->datatypeSize);
+    list->count--;
+
+    return 1;
 }

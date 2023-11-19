@@ -11,9 +11,12 @@ struct ArrayList {
     void* get;
 };
 
-_Bool ArrayList_init(struct ArrayList* list, unsigned int initialSize, size_t datatypeSize);
+_Bool ArrayList_init(struct ArrayList* list, const unsigned int initialSize, const size_t datatypeSize);
+_Bool ArrayList_from(struct ArrayList* list, struct ArrayList* from);
 void ArrayList_free(struct ArrayList* list);
 _Bool ArrayList_add(struct ArrayList* list, void *value);
-void *ArrayList_get(struct ArrayList* list, unsigned int index);
+void *ArrayList_get(struct ArrayList* list, const unsigned int index);
+_Bool ArrayList_delete(struct ArrayList* list, const unsigned int index);
+_Bool ArrayList_fastDelete(struct ArrayList* list, const unsigned int index);
 
 #endif //ARRAYLIST_LIBRARY_H
