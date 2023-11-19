@@ -3,4 +3,4 @@ project(arraylist C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_library(arraylist STATIC library.c)
+add_library(arraylist STATIC arraylist.c)

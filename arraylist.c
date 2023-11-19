@@ -1,4 +1,4 @@
-#include "library.h"
+#include "arraylist.h"
 
 _Bool ArrayList_init(struct ArrayList* list, unsigned int initialSize, size_t datatypeSize) {
     list->count = 0;
