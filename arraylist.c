@@ -4,7 +4,7 @@ _Bool ArrayList_init(struct ArrayList* list, const unsigned int initialSize, con
     list->count = 0;
     list->size = initialSize;
     list->datatypeSize = datatypeSize;
-    list->get = malloc(datatypeSize);
+    list->get = malloc(initialSize * datatypeSize);
     return list->get != NULL;
 }
 
