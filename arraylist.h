@@ -8,7 +8,7 @@ struct ArrayList {
     unsigned int size;
     unsigned int count;
     size_t datatypeSize;
-    void* get;
+    void* content;
 };
 
 _Bool ArrayList_init(struct ArrayList* list, const unsigned int initialSize, const size_t datatypeSize);
