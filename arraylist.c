@@ -3,76 +3,90 @@
 #include <stdlib.h>
 #include <string.h>
 
-_Bool ArrayList_init(struct ArrayList* restrict list, const unsigned int initialSize, const unsigned int datatypeSize) {
+_Bool ArrayList_create(ArrayList* restrict list, const unsigned int initialSize, const unsigned int datatypeSize) {
+    list = malloc(sizeof(ArrayList));
+    if (list == NULL) {
+        return 0;
+    }
     list->count = 0;
     list->size = initialSize;
-    list->datatypeSize = datatypeSize;
+    list->datatype = datatypeSize;
     list->content = malloc(initialSize * datatypeSize);
+    if (list->content == NULL) {
+        free(list);
+        return 0;
+    }
+    return 1;
+}
+
+_Bool ArrayList_from(ArrayList* restrict list, const ArrayList* restrict from) {
+    list = malloc(sizeof(ArrayList));
+    memcpy(list, from, sizeof(ArrayList));
     return list->content != NULL;
 }
 
-_Bool ArrayList_from(struct ArrayList* list, const struct ArrayList* restrict from) {
-    memcpy(list, from, sizeof(struct ArrayList));
-    return list->content != NULL;
-}
-
-void ArrayList_free(struct ArrayList* list) {
+void ArrayList_destroy(ArrayList* list) {
     list->count = 0;
     list->size = 0;
-    list->datatypeSize = 0;
+    list->datatype = 0;
     free(list->content);
+    free(list);
 }
 
-_Bool ArrayList_add(struct ArrayList* list, const void *value) {
+_Bool ArrayList_add(ArrayList* restrict list, const void* restrict value) {
     if (list->count == list->size) {
         list->size *= 2;
-        list->content = realloc(list->content, list->size * sizeof(list->datatypeSize));
+        list->content = realloc(list->content, list->size * sizeof(list->datatype));
         if (list->content == NULL) {
             return 0;
         }
     }
 
-    memcpy((char *)list->content + list->count * list->datatypeSize, value, list->datatypeSize);
+    memcpy((char *)list->content + list->count * list->datatype, value, list->datatype);
 
     list->count++;
     return 1;
 }
 
-void *ArrayList_get(const struct ArrayList* restrict list, const unsigned int index) {
+_Bool ArrayList_set(ArrayList* restrict list, const unsigned int index, const void* restrict value) {
+    if (index >= list->count) {
+        return 0;
+    }
+    memcpy(list->content + index * list->datatype, value, list->datatype);
+    return 1;
+}
+
+void *ArrayList_get(const ArrayList* restrict list, const unsigned int index) {
     if (index >= list->count) {
         return NULL;
     }
-    return (char *)list->content + index * list->datatypeSize;
+    return (char *)list->content + index * list->datatype;
 }
 
-_Bool ArrayList_continuousDelete(struct ArrayList* list, const unsigned int index) {
+_Bool ArrayList_continuousDelete(ArrayList* restrict list, const unsigned int index) {
     if (index >= list->count) {
         return 0;
     }
 
-    for (int i = index; i < list->count - 1; i++) {
-        memcpy((char *)list->content + i * list->datatypeSize, (char *)list->content + (i + 1) * list->datatypeSize, list->datatypeSize);
+    memmove(list->content + index * list->datatype, list->content + (index + 1) * list->datatype, list->datatype);
+    list->count--;
+    return 1;
+}
+
+_Bool ArrayList_fastDelete(ArrayList* restrict list, const unsigned int index) {
+    if (index >= list->count) {
+        return 0;
     }
 
+    memcpy((char *)list->content + index * list->datatype, (char*)list->content + (list->count - 1) * list->datatype, list->datatype);
     list->count--;
 
     return 1;
 }
 
-_Bool ArrayList_fastDelete(struct ArrayList* list, const unsigned int index) {
-    if (index >= list->count) {
-        return 0;
-    }
-
-    memcpy((char *)list->content + index * list->datatypeSize, (char*)list->content + (list->count - 1) * list->datatypeSize, list->datatypeSize);
-    list->count--;
-
-    return 1;
-}
-
-_Bool ArrayList_contains(const struct ArrayList* list, const void *value) {
+_Bool ArrayList_contains(const ArrayList* restrict list, const void *value) {
     for (int i = 0; i < list->count; i++) {
-        if (memcmp((char *)list->content + i * list->datatypeSize, value, list->datatypeSize) == 0) {
+        if (memcmp((char *)list->content + i * list->datatype, value, list->datatype) == 0) {
             return 1;
         }
     }
