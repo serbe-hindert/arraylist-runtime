@@ -1,21 +1,21 @@
-#ifndef ARRAYLIST_LIBRARY_H
-#define ARRAYLIST_LIBRARY_H
+#ifndef ArrayList_LIBRARY_H
+#define ArrayList_LIBRARY_H
 
-typedef struct ArrayList {
+typedef struct RArrayList {
     unsigned int size;
     unsigned int count;
     unsigned int datatype;
     void* content;
-} ArrayList;
+} RArrayList;
 
-_Bool ArrayList_create(ArrayList* restrict list, const unsigned int initialSize, const unsigned int datatypeSize);
-_Bool ArrayList_from(ArrayList* restrict list, const ArrayList* restrict from);
-void ArrayList_destroy(ArrayList* list);
-_Bool ArrayList_add(ArrayList* restrict list, const void* restrict value);
-_Bool ArrayList_set(ArrayList* restrict list, const unsigned int index, const void* restrict value);
-void *ArrayList_get(const ArrayList* restrict list, const unsigned int index);
-_Bool ArrayList_continuousDelete(ArrayList* restrict list, const unsigned int index);
-_Bool ArrayList_fastDelete(ArrayList* restrict list, const unsigned int index);
-_Bool ArrayList_contains(const ArrayList* restrict list, const void *value);
+_Bool RArrayList_create(RArrayList* restrict list, const unsigned int initialSize, const unsigned int datatypeSize);
+_Bool RArrayList_from(RArrayList* restrict list, const RArrayList* restrict from);
+void RArrayList_destroy(RArrayList* list);
+_Bool RArrayList_add(RArrayList* restrict list, const void* restrict value);
+_Bool RArrayList_set(RArrayList* restrict list, const unsigned int index, const void* restrict value);
+void* RArrayList_get(const RArrayList* restrict list, const unsigned int index);
+_Bool RArrayList_continuousDelete(RArrayList* restrict list, const unsigned int index);
+_Bool RArrayList_fastDelete(RArrayList* restrict list, const unsigned int index);
+_Bool RArrayList_contains(const RArrayList* restrict list, const void *value);
 
-#endif //ARRAYLIST_LIBRARY_H
+#endif //ArrayList_LIBRARY_H
