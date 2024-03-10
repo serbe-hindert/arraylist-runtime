@@ -1,5 +1,7 @@
 # arraylist
 
+C23 compliant
+
 Implementation of arraylist datastructure for datatypes only known at runtime in C. For datatypes known at compile time look at https://github.com/serbe-hindert/arraylist-compiletime
 
 Generate the .a file via the CMakeLists.txt provided or any build-system really.
